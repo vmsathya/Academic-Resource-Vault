@@ -1,0 +1,42 @@
+================================================================================
+                  ACADEMIC RESOURCE VAULT - OFFICIAL STUDY MATERIAL            
+================================================================================
+
+SUBJECT CODE:  CS401
+CATEGORY:      PYQ
+DOCUMENT:      May/June 2025 Semester IV Examination Paper
+VERIFIED BY:   Department of Computer Science & Engineering Academic Council
+DATE:          Academic Year 2025 - 2026
+STATUS:        Verified & Released for Examination Preparation
+
+--------------------------------------------------------------------------------
+OVERVIEW & INSTRUCTIONS:
+Operating Systems end-semester exam paper featuring CPU scheduling algorithms, Banker's deadlock avoidance, semaphores, and virtual memory page replacement.
+--------------------------------------------------------------------------------
+
+PART A: SHORT ANSWER QUESTIONS (10 x 2 = 20 Marks)
+--------------------------------------------------
+1. Define Big-O asymptotic notation and state its formal mathematical definition.
+2. Differentiate between an AVL Tree and a Red-Black Tree in terms of rotation bounds.
+3. What is the minimum number of nodes in a complete binary tree of height 5?
+4. Explain the concept of open addressing with quadratic probing in hash tables.
+5. Write down the recurrence relation for Merge Sort and solve it using Master's Theorem.
+6. State the properties of an Adjacency Matrix versus an Adjacency List for sparse graphs.
+7. Define Topological Sorting and state the prerequisite graph condition.
+8. What is the worst-case time complexity of Quick Sort, and how can randomized pivot selection avoid it?
+9. Distinguish between internal fragmentation and external fragmentation.
+10. State Dijkstra's algorithm greedy choice property and explain why it fails for negative edge weights.
+
+PART B: DESCRIPTIVE & PROBLEM SOLVING QUESTIONS (5 x 16 = 80 Marks)
+------------------------------------------------------------------
+11. (a) Construct an AVL Tree by inserting the following sequence of keys:
+        {42, 15, 88, 6, 27, 63, 94, 20, 31, 75}.
+        Show every rotation (LL, RR, LR, RL) and the balance factor of every node after each step. (10 Marks)
+    (b) Provide the complete Java implementation of the double left-right rotation algorithm. (6 Marks)
+
+12. (a) Execute Dijkstra's Single Source Shortest Path Algorithm on the directed weighted graph with vertex set V={A, B, C, D, E, F}
+        and starting vertex A. Tabulate the distance vector updates for each relaxation step. (12 Marks)
+    (b) Analyze the time complexity when implemented with an Adjacency List and Min-Heap priority queue. (4 Marks)
+
+================================================================================
+End of Study Material | Stored in Academic Resource Vault

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Resource Vault | Centralized College Study Portal</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Demo Quick Switcher Banner -->
+  <aside class="demo-banner" aria-label="Demo Role Switcher">
+    <div class="demo-content">
+      <span class="demo-badge">QUICK DEMO ACCESS</span>
+      <span class="demo-text">Explore roles without typing:</span>
+      <div class="demo-actions">
+        <button class="btn btn-xs btn-demo" id="demoStudentBtn" onclick="quickLogin('student@vault.edu', 'student123')">
+          <span class="icon">👨‍🎓</span> Alex Chen (Student)
+        </button>
+        <button class="btn btn-xs btn-demo" id="demoAdminBtn" onclick="quickLogin('admin@vault.edu', 'admin123')">
+          <span class="icon">👩‍🏫</span> Prof. Sarah Jenkins (Staff/Admin)
+        </button>
+        <button class="btn btn-xs btn-demo" id="demoFacultyBtn" onclick="quickLogin('faculty@vault.edu', 'faculty123')">
+          <span class="icon">👨‍🏫</span> Dr. Vance (Faculty)
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            <path d="M8 6h10"></path>
+            <path d="M8 10h10"></path>
+            <path d="M8 14h6"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">Academic Resource Vault</span>
+          <span class="brand-subtitle">Centralized College Study Portal • Java & JDBC</span>
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <!-- Theme Toggle -->
+        <button class="btn-icon" id="themeToggleBtn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Admin Actions (Visible to Staff/Admin) -->
+        <div class="admin-actions-group" id="adminActionsGroup" style="display: none;">
+          <button class="btn btn-primary" onclick="openUploadModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload Material
+          </button>
+          <button class="btn btn-secondary" onclick="openSubjectModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            Manage Subjects
+          </button>
+        </div>
+
+        <!-- Auth Status & Profile Menu -->
+        <div class="auth-box" id="authBox">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Portal Body -->
+  <main class="main-container">
+
+    <!-- Hero / Stats Section -->
+    <section class="hero-section">
+      <div class="hero-header">
+        <div class="hero-text">
+          <div class="badge-pill">
+            <span class="live-dot"></span> Live JDBC Repository • Odd & Even Semesters
+          </div>
+          <h1>Centralized Academic Study Portal</h1>
+          <p>Instant access to syllabus-aligned Previous Year Question Papers (PYQs), professor-verified lecture notes, module question banks, and official answer keys.</p>
+        </div>
+        <div class="hero-badge-tag">
+          <div class="college-crest">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+            </svg>
+          </div>
+          <div class="crest-details">
+            <strong>School of Computing & Engineering</strong>
+            <span>Verified Resource Vault v1.0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card" data-category="ALL" onclick="filterByCategory('ALL')">
+          <div class="stat-icon-wrapper icon-all">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <div class="stat-data">
+            <span class="stat-value" id="statTotalResources">--</span>
+            <span class="stat-label">Total Resources</span>
+          </div>
+        </div>
+
+        <div class="stat-card" data-category="PYQ" onclick="filterByCategory('PYQ')">
+          <div class="stat-icon-wrapper icon-pyq">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="stat-data">
+            <span class="stat-value" id="statTotalPYQs">--</span>
+            <span class="stat-label">Previous Year Papers</span>
+          </div>
+        </div>
+
+        <div class="stat-card" data-category="NOTES" onclick="filterByCategory('NOTES')">
+          <div class="stat-icon-wrapper icon-notes">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <div class="stat-data">
+            <span class="stat-value" id="statTotalNotes">--</span>
+            <span class="stat-label">Lecture Notes</span>
+          </div>
+        </div>
+
+        <div class="stat-card" data-category="ANSWER_KEY" onclick="filterByCategory('ANSWER_KEY')">
+          <div class="stat-icon-wrapper icon-key">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m21 2-2 2m-6 6 7-7a2 2 0 0 0-2.83-2.83L10.1 7.24a5 5 0 1 0 2.83 2.83z"></path>
+              <circle cx="7.5" cy="16.5" r="1.5"></circle>
+            </svg>
+          </div>
+          <div class="stat-data">
+            <span class="stat-value" id="statTotalKeys">--</span>
+            <span class="stat-label">Answer Keys</span>
+          </div>
+        </div>
+
+        <div class="stat-card" data-category="QUESTION_BANK" onclick="filterByCategory('QUESTION_BANK')">
+          <div class="stat-icon-wrapper icon-qb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              <path d="M9 14h6"></path>
+              <path d="M9 18h6"></path>
+              <path d="M9 10h6"></path>
+            </svg>
+          </div>
+          <div class="stat-data">
+            <span class="stat-value" id="statTotalQBs">--</span>
+            <span class="stat-label">Question Banks</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper icon-downloads">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <div class="stat-data">
+            <span class="stat-value" id="statTotalDownloads">--</span>
+            <span class="stat-label">Total Downloads</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls Panel -->
+    <section class="controls-panel">
+      <!-- Search Input Bar -->
+      <div class="search-bar-wrapper">
+        <div class="search-input-group">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search by subject code (e.g. CS301), subject name, topic or keywords..." autocomplete="off">
+          <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" title="Clear search" style="display: none;">✕</button>
+        </div>
+        <div class="view-toggle">
+          <button class="view-btn active" id="gridViewBtn" onclick="setViewMode('grid')" title="Grid View">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </button>
+          <button class="view-btn" id="tableViewBtn" onclick="setViewMode('table')" title="Table View">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Semester & Type Filtering Tabs -->
+      <div class="filters-row">
+        <!-- Odd / Even Pills -->
+        <div class="filter-group">
+          <span class="filter-label">Semester Type:</span>
+          <div class="button-pills" id="semTypePills">
+            <button class="pill active" data-type="ALL" onclick="filterBySemType('ALL')">All Semesters</button>
+            <button class="pill" data-type="ODD" onclick="filterBySemType('ODD')">Odd Semesters (1, 3, 5, 7)</button>
+            <button class="pill" data-type="EVEN" onclick="filterBySemType('EVEN')">Even Semesters (2, 4, 6, 8)</button>
+          </div>
+        </div>
+
+        <!-- Specific Semester Pills -->
+        <div class="filter-group">
+          <span class="filter-label">Semester:</span>
+          <div class="button-pills semester-pills" id="semNumberPills">
+            <button class="pill pill-sm active" data-sem="ALL" onclick="filterBySemNumber('ALL')">All</button>
+            <button class="pill pill-sm" data-sem="1" onclick="filterBySemNumber(1)">Sem 1</button>
+            <button class="pill pill-sm" data-sem="2" onclick="filterBySemNumber(2)">Sem 2</button>
+            <button class="pill pill-sm" data-sem="3" onclick="filterBySemNumber(3)">Sem 3</button>
+            <button class="pill pill-sm" data-sem="4" onclick="filterBySemNumber(4)">Sem 4</button>
+            <button class="pill pill-sm" data-sem="5" onclick="filterBySemNumber(5)">Sem 5</button>
+            <button class="pill pill-sm" data-sem="6" onclick="filterBySemNumber(6)">Sem 6</button>
+            <button class="pill pill-sm" data-sem="7" onclick="filterBySemNumber(7)">Sem 7</button>
+            <button class="pill pill-sm" data-sem="8" onclick="filterBySemNumber(8)">Sem 8</button>
+          </div>
+        </div>
+
+        <!-- Subject Code Dropdown -->
+        <div class="filter-group">
+          <span class="filter-label">Subject:</span>
+          <select id="subjectSelect" class="form-select select-subject" onchange="filterBySubject(this.value)">
+            <option value="ALL">All Subjects</option>
+            <!-- Dynamically populated -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Resource Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="cat-tab active" data-cat="ALL" onclick="filterByCategory('ALL')">
+          <span class="cat-icon">📑</span> All Materials
+          <span class="cat-count" id="countAll">0</span>
+        </button>
+        <button class="cat-tab" data-cat="PYQ" onclick="filterByCategory('PYQ')">
+          <span class="cat-icon">📄</span> PYQs (Papers)
+          <span class="cat-count" id="countPYQ">0</span>
+        </button>
+        <button class="cat-tab" data-cat="NOTES" onclick="filterByCategory('NOTES')">
+          <span class="cat-icon">📚</span> Lecture Notes
+          <span class="cat-count" id="countNotes">0</span>
+        </button>
+        <button class="cat-tab" data-cat="QUESTION_BANK" onclick="filterByCategory('QUESTION_BANK')">
+          <span class="cat-icon">📋</span> Question Banks
+          <span class="cat-count" id="countQB">0</span>
+        </button>
+        <button class="cat-tab" data-cat="ANSWER_KEY" onclick="filterByCategory('ANSWER_KEY')">
+          <span class="cat-icon">🔑</span> Answer Keys
+          <span class="cat-count" id="countKey">0</span>
+        </button>
+        <button class="cat-tab" data-cat="BOOKMARKED" onclick="filterByBookmarked()">
+          <span class="cat-icon">⭐</span> My Bookmarks
+          <span class="cat-count" id="countBookmark">0</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Active Filters & Results Summary -->
+    <div class="results-header">
+      <div class="results-info">
+        <span class="results-title">Available Resources</span>
+        <span class="results-badge" id="resultsCount">Loading...</span>
+        <span class="active-filter-tag" id="activeFilterTag" style="display: none;"></span>
+      </div>
+      <div class="results-actions">
+        <button class="btn btn-sm btn-ghost" onclick="resetAllFilters()">Reset Filters</button>
+      </div>
+    </div>
+
+    <!-- Resources Display Container -->
+    <div id="resourcesContainer" class="resources-grid">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Table View Container (Hidden by default) -->
+    <div id="tableContainer" class="table-responsive" style="display: none;">
+      <table class="resources-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Subject</th>
+            <th>Title & Description</th>
+            <th>Semester</th>
+            <th>File</th>
+            <th>Uploader</th>
+            <th>Downloads</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="resourcesTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-icon">🔍</div>
+      <h3>No matching academic resources found</h3>
+      <p>Try adjusting your search keywords, semester selection, or resource category filter.</p>
+      <button class="btn btn-primary" onclick="resetAllFilters()">Clear All Filters</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <strong>Academic Resource Vault</strong> • Centralized College Study Portal
+        <p>Built with Java (JDBC, SQLite, HttpServer) • Role-based access for Students and Faculty</p>
+      </div>
+      <div class="footer-right">
+        <span>Verified Academic Content</span>
+        <div class="footer-links">
+          <a href="#" onclick="openAuthModal('login'); return false;">Switch Account</a>
+          <a href="#" onclick="openUploadModal(); return false;">Upload Materials</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- MODALS -->
+  <!-- ===================================================================== -->
+
+  <!-- 1. Document Preview Modal -->
+  <div class="modal-backdrop" id="previewModal" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="badge" id="previewTypeBadge">NOTES</span>
+          <h2 id="previewTitle">Document Preview</h2>
+          <div class="preview-meta">
+            <span id="previewSubjectCode" class="meta-code">CS301</span>
+            <span id="previewSubjectName">Data Structures</span> •
+            <span id="previewSemester">Semester 3 (ODD)</span> •
+            <span id="previewUploader">Uploaded by Prof. Jenkins</span>
+          </div>
+        </div>
+        <button class="btn-close" onclick="closeModal('previewModal')" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body preview-body">
+        <div class="preview-toolbar">
+          <span class="toolbar-info" id="previewFileSize">Size: 1.4 MB</span>
+          <div class="toolbar-buttons">
+            <button class="btn btn-sm btn-secondary" onclick="copyPreviewText()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy Text
+            </button>
+            <button class="btn btn-sm btn-primary" id="previewDownloadBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download File
+            </button>
+          </div>
+        </div>
+        <pre class="preview-content-box" id="previewContent">Loading document content...</pre>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('previewModal')">Close Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Staff / Admin Upload Resource Modal -->
+  <div class="modal-backdrop" id="uploadModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>Upload Academic Study Material</h2>
+          <p class="modal-subtitle">Publish syllabus-aligned PYQs, notes, or answer keys for students</p>
+        </div>
+        <button class="btn-close" onclick="closeModal('uploadModal')">✕</button>
+      </div>
+      <form id="uploadForm" onsubmit="handleUploadSubmit(event)">
+        <div class="modal-body form-grid">
+          <!-- Subject Selector -->
+          <div class="form-group">
+            <label for="uploadSubject">Subject <span class="required">*</span></label>
+            <select id="uploadSubject" class="form-select" required>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <!-- Resource Type Selector -->
+          <div class="form-group">
+            <label for="uploadType">Resource Category <span class="required">*</span></label>
+            <select id="uploadType" class="form-select" required>
+              <option value="NOTES">📚 Lecture Notes & Study Material</option>
+              <option value="PYQ">📄 Previous Year Question Paper (PYQ)</option>
+              <option value="QUESTION_BANK">📋 Question Bank (Unit-wise)</option>
+              <option value="ANSWER_KEY">🔑 Official Answer Key & Solutions</option>
+            </select>
+          </div>
+
+          <!-- Title -->
+          <div class="form-group full-width">
+            <label for="uploadTitle">Document Title <span class="required">*</span></label>
+            <input type="text" id="uploadTitle" class="form-input" placeholder="e.g. End-Semester 2025 Solved Question Paper" required>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group full-width">
+            <label for="uploadDescription">Detailed Syllabus / Description</label>
+            <textarea id="uploadDescription" class="form-textarea" rows="3" placeholder="Provide syllabus units covered, exam month/year, important topics included..."></textarea>
+          </div>
+
+          <!-- Quick Template Selector -->
+          <div class="form-group full-width">
+            <div class="template-selector">
+              <span class="template-label">Quick Templates:</span>
+              <button type="button" class="btn-template" onclick="fillUploadTemplate('pyq')">+ End-Sem PYQ</button>
+              <button type="button" class="btn-template" onclick="fillUploadTemplate('notes')">+ Unit 1-3 Notes</button>
+              <button type="button" class="btn-template" onclick="fillUploadTemplate('key')">+ Solved Key</button>
+            </div>
+          </div>
+
+          <!-- File Upload Zone -->
+          <div class="form-group full-width">
+            <label>Attach Material File (.pdf, .txt, .md, .docx)</label>
+            <div class="file-drop-zone" id="fileDropZone">
+              <input type="file" id="uploadFileInput" class="file-input-hidden" onchange="handleFileSelect(event)">
+              <div class="drop-zone-content">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="drop-text">
+                  <strong>Click to browse</strong> or drag and drop file here
+                  <span>PDF, TXT, Markdown, or DOCX (Max 25MB)</span>
+                </div>
+              </div>
+              <div id="fileSelectedDisplay" class="selected-file-badge" style="display: none;">
+                <span id="selectedFileName">filename.pdf</span>
+                <span class="remove-file-btn" onclick="clearSelectedFile(event)">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('uploadModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="uploadSubmitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Publish to Vault
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Edit Resource Modal -->
+  <div class="modal-backdrop" id="editModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>Edit Academic Material</h2>
+          <p class="modal-subtitle">Update metadata, subject code or resource categorization</p>
+        </div>
+        <button class="btn-close" onclick="closeModal('editModal')">✕</button>
+      </div>
+      <form id="editForm" onsubmit="handleEditSubmit(event)">
+        <input type="hidden" id="editResourceId">
+        <div class="modal-body form-grid">
+          <div class="form-group">
+            <label for="editSubject">Subject</label>
+            <select id="editSubject" class="form-select" required></select>
+          </div>
+          <div class="form-group">
+            <label for="editType">Category</label>
+            <select id="editType" class="form-select" required>
+              <option value="NOTES">📚 Lecture Notes</option>
+              <option value="PYQ">📄 Previous Year Paper (PYQ)</option>
+              <option value="QUESTION_BANK">📋 Question Bank</option>
+              <option value="ANSWER_KEY">🔑 Answer Key</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label for="editTitle">Title</label>
+            <input type="text" id="editTitle" class="form-input" required>
+          </div>
+          <div class="form-group full-width">
+            <label for="editDescription">Description</label>
+            <textarea id="editDescription" class="form-textarea" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('editModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Manage Subjects Modal -->
+  <div class="modal-backdrop" id="subjectModal" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <h2>Manage Academic Curriculum Subjects</h2>
+          <p class="modal-subtitle">Add or view subjects mapped across Odd and Even semesters</p>
+        </div>
+        <button class="btn-close" onclick="closeModal('subjectModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- New Subject Form -->
+        <form id="newSubjectForm" onsubmit="handleAddSubject(event)" class="subject-form-bar">
+          <div class="sub-col code-col">
+            <label for="newSubCode">Code</label>
+            <input type="text" id="newSubCode" class="form-input" placeholder="e.g. CS503" required>
+          </div>
+          <div class="sub-col name-col">
+            <label for="newSubName">Subject Name</label>
+            <input type="text" id="newSubName" class="form-input" placeholder="e.g. Distributed Computing Systems" required>
+          </div>
+          <div class="sub-col sem-col">
+            <label for="newSubSem">Semester</label>
+            <select id="newSubSem" class="form-select">
+              <option value="1">Sem 1 (ODD)</option>
+              <option value="2">Sem 2 (EVEN)</option>
+              <option value="3">Sem 3 (ODD)</option>
+              <option value="4">Sem 4 (EVEN)</option>
+              <option value="5">Sem 5 (ODD)</option>
+              <option value="6">Sem 6 (EVEN)</option>
+              <option value="7">Sem 7 (ODD)</option>
+              <option value="8">Sem 8 (EVEN)</option>
+            </select>
+          </div>
+          <div class="sub-col btn-col">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-primary btn-block">+ Add Subject</button>
+          </div>
+        </form>
+
+        <!-- Subjects List Table -->
+        <div class="subjects-list-container">
+          <table class="simple-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Subject Name</th>
+                <th>Semester</th>
+                <th>Type</th>
+                <th>Resources</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="subjectsTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('subjectModal')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Auth Modal (Login & Register) -->
+  <div class="modal-backdrop" id="authModal" style="display: none;">
+    <div class="modal-card modal-sm">
+      <div class="modal-header">
+        <div>
+          <h2 id="authModalTitle">Sign In to Vault</h2>
+          <p class="modal-subtitle">Access college course materials & manage resources</p>
+        </div>
+        <button class="btn-close" onclick="closeModal('authModal')">✕</button>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab-btn" id="tabRegister" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="auth-form-content">
+        <div class="form-group full-width">
+          <label for="loginEmail">College Email / Username</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="student@vault.edu or admin@vault.edu" required>
+        </div>
+        <div class="form-group full-width">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+        </div>
+        <div class="auth-demo-hint">
+          <strong>Demo Logins:</strong><br>
+          • Student: <code>student@vault.edu</code> / <code>student123</code><br>
+          • Admin: <code>admin@vault.edu</code> / <code>admin123</code>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="auth-form-content" style="display: none;">
+        <div class="form-group full-width">
+          <label for="regName">Full Name</label>
+          <input type="text" id="regName" class="form-input" placeholder="e.g. John Doe" required>
+        </div>
+        <div class="form-group full-width">
+          <label for="regEmail">College Email</label>
+          <input type="email" id="regEmail" class="form-input" placeholder="john.doe@vault.edu" required>
+        </div>
+        <div class="form-group full-width">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" class="form-input" placeholder="At least 6 characters" required>
+        </div>
+        <div class="form-group full-width">
+          <label for="regRole">Role</label>
+          <select id="regRole" class="form-select">
+            <option value="STUDENT">Student (Search, Browse, Download)</option>
+            <option value="ADMIN">Staff / Faculty Admin (Upload & Manage)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

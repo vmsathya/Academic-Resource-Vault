@@ -1,0 +1,35 @@
+================================================================================
+                  ACADEMIC RESOURCE VAULT - OFFICIAL STUDY MATERIAL            
+================================================================================
+
+SUBJECT CODE:  CS402
+CATEGORY:      NOTES
+DOCUMENT:      Database Systems Master Notes: Normalization (1NF to BCNF) & Transactions
+VERIFIED BY:   Department of Computer Science & Engineering Academic Council
+DATE:          Academic Year 2025 - 2026
+STATUS:        Verified & Released for Examination Preparation
+
+--------------------------------------------------------------------------------
+OVERVIEW & INSTRUCTIONS:
+Deep-dive guide into Functional Dependencies, Armstrong's Axioms, Multi-valued dependencies, ACID properties, 2PL, and Serializability schedules.
+--------------------------------------------------------------------------------
+
+CHAPTER SUMMARY & KEY CONCEPTS:
+
+1. FUNDAMENTALS OF TREE STRUCTURES:
+   - Root, internal nodes, leaves, depth, height.
+   - Maximum nodes at depth d: 2^d.
+   - Maximum nodes in binary tree of height h: 2^(h+1) - 1.
+
+2. BALANCED BINARY SEARCH TREES:
+   - AVL Condition: For every node, |height(left) - height(right)| <= 1.
+   - Search time: O(log n) guaranteed.
+   - Rebalancing operations: Single Left (RR), Single Right (LL), Left-Right (LR), Right-Left (RL).
+
+3. GRAPH TRAVERSAL ALGORITHMS:
+   - Breadth-First Search (BFS): Uses Queue FIFO data structure. Finds shortest path in unweighted graph.
+   - Depth-First Search (DFS): Uses Stack LIFO / Recursion. Applications: Cycle detection, topological sort.
+   - Asymptotic Complexity: O(V + E) for adjacency list representation.
+
+================================================================================
+End of Study Material | Stored in Academic Resource Vault

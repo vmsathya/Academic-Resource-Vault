@@ -1,0 +1,33 @@
+================================================================================
+                  ACADEMIC RESOURCE VAULT - OFFICIAL STUDY MATERIAL            
+================================================================================
+
+SUBJECT CODE:  CS402
+CATEGORY:      QUESTION_BANK
+DOCUMENT:      DBMS Question Bank: SQL Queries, ER Modeling & Indexing
+VERIFIED BY:   Department of Computer Science & Engineering Academic Council
+DATE:          Academic Year 2025 - 2026
+STATUS:        Verified & Released for Examination Preparation
+
+--------------------------------------------------------------------------------
+OVERVIEW & INSTRUCTIONS:
+Over 85 practice questions featuring complex nested SQL queries, relational algebra expressions, and B+ tree insertion/deletion exercises.
+--------------------------------------------------------------------------------
+
+UNIVERSITY QUESTION BANK - BLOOM'S TAXONOMY CLASSIFICATION:
+
+[LEVEL 1: REMEMBER & RECALL]
+1. List the four essential properties of an AVL tree.
+2. Define minimum spanning tree (MST) and state Cut property.
+3. What is collision resolution? List two open addressing techniques.
+
+[LEVEL 2: UNDERSTAND & EXPLAIN]
+4. Explain how heap-sort operates in-place without auxiliary arrays.
+5. Compare Prim's and Kruskal's algorithms in terms of dense vs sparse graph performance.
+
+[LEVEL 3: APPLY & DESIGN]
+6. Design an algorithm to detect whether a directed graph contains a cycle in O(V + E) time.
+7. Implement a circular queue using an array with wrap-around modulo arithmetic.
+
+================================================================================
+End of Study Material | Stored in Academic Resource Vault

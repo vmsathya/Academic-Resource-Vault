@@ -1,0 +1,46 @@
+================================================================================
+                  ACADEMIC RESOURCE VAULT - OFFICIAL STUDY MATERIAL            
+================================================================================
+
+SUBJECT CODE:  CS401
+CATEGORY:      ANSWER_KEY
+DOCUMENT:      Step-by-Step Solutions & Answer Key - May/June 2025 OS Exam
+VERIFIED BY:   Department of Computer Science & Engineering Academic Council
+DATE:          Academic Year 2025 - 2026
+STATUS:        Verified & Released for Examination Preparation
+
+--------------------------------------------------------------------------------
+OVERVIEW & INSTRUCTIONS:
+Detailed numerical solutions for Gantt chart CPU scheduling, Peterson's algorithm proof, and FIFO / LRU / Optimal page replacement comparison table.
+--------------------------------------------------------------------------------
+
+SOLUTION MANUAL & DETAILED RUBRIC:
+
+QUESTION 1: Formal Definition of Big-O Notation
+Model Answer: Let f(n) and g(n) be functions from non-negative integers to real numbers.
+We write f(n) = O(g(n)) if and only if there exist positive constants c and n0 such that:
+    0 <= f(n) <= c * g(n)  for all n >= n0.
+Marking Rubric: Definition formula (1 Mark) + Graphical interpretation & threshold n0 (1 Mark).
+
+QUESTION 11: AVL Tree Construction Step-by-Step
+Step 1: Insert 42 -> Root node (BF = 0)
+Step 2: Insert 15 -> Left of 42 (BF of 42 = +1)
+Step 3: Insert 88 -> Right of 42 (Balanced, BF = 0)
+Step 4: Insert 6  -> Left of 15 (BF of 15 = +1, BF of 42 = +1)
+Step 5: Insert 27 -> Right of 15 (Balanced subtree)
+Step 6: Insert 20 -> Trigger LR Imbalance at node 15 -> Perform Left-Right Double Rotation.
+Resulting Tree Height: 4 | All nodes satisfy |BF| <= 1.
+
+Code Verification:
+Node rotateRight(Node y) {
+    Node x = y.left;
+    Node T2 = x.right;
+    x.right = y;
+    y.left = T2;
+    y.height = Math.max(height(y.left), height(y.right)) + 1;
+    x.height = Math.max(height(x.left), height(x.right)) + 1;
+    return x;
+}
+
+================================================================================
+End of Study Material | Stored in Academic Resource Vault
